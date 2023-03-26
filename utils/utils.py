@@ -29,8 +29,24 @@ def get_device(device):
 
 
 def load_data():
-    dataset_train = datasets.CIFAR10(root='./data', train=True, download=True, transform=transforms.ToTensor())
-    dataset_test = datasets.CIFAR10(root='./data', train=False, download=True, transform=transforms.ToTensor())
+    train_dataset = './ImageNet-13/train';
+    test_dataset = './ImageNet-13/test';
+
+    mean = [0.4363, 0.4328, 0.329]
+    std = [0.2129, 0.2075, 0.2038]
+
+    train_transform = transforms.Compose({
+      transforms.Resize((224, 224)),
+      transforms.ToTensor(),
+      # transforms.Normalize(torch.Tensor(mean), torch.Tensor(std))
+    })
+    test_transform = transforms.Compose({
+      transforms.Resize((224, 224)),
+      transforms.ToTensor(),
+      # transforms.Normalize(torch.Tensor(mean), torch.Tensor(std))
+    })
+    dataset_train = datasets.ImageFolder(root=train_dataset,transform=train_transform)
+    dataset_test = datasets.ImageFolder(root=test_dataset, transform=test_transform)
     normalizer = get_normalizer(dataset_train)
     return dataset_train, dataset_test, normalizer
 
