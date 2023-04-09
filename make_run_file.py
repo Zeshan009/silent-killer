@@ -8,7 +8,7 @@ def get_args():
     parser = ArgumentParser()
     parser.add_argument('--wandb_entity', help='WandB entity for logging')
     parser.add_argument('--model_path', help='path to the downloaded weights')
-    parser.add_argument('--model_arch', choices=['vgg11', 'resnet18', 'mobilenet'], help='architecture')
+    parser.add_argument('--model_arch', choices=['vgg11', 'resnet18', 'resnet50', 'mobilenet'], help='architecture')
     parser.add_argument('--trigger_type', choices=['patch', 'additive'], help='architecture')
     parser.add_argument('--experiment', choices=['base', 'silent_killer'], help='architecture')
     return parser.parse_args()

@@ -29,8 +29,8 @@ def get_device(device):
 
 
 def load_data():
-    train_dataset = './ImageNet-13/train';
-    test_dataset = './ImageNet-13/test';
+    train_dataset = './ImageNet-10/train';
+    test_dataset = './ImageNet-10/test';
 
     mean = [0.4363, 0.4328, 0.329]
     std = [0.2129, 0.2075, 0.2038]
@@ -106,6 +106,13 @@ def resnet18(pretrained=False, out_features=10):
     else:
         model = models.resnet18()
     return nn.Sequential(*list(model.children())[:-1], torch.nn.Flatten(), nn.Linear(512, out_features))
+
+def resnet50(pretrained=False, out_features=10):
+    if pretrained:
+        model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+    else:
+        model = models.resnet50()
+    return nn.Sequential(*list(model.children())[:-1], torch.nn.Flatten(), nn.Linear(2048, out_features))
 
 
 def vgg11(pretrained=False, out_features=10):
@@ -229,6 +236,8 @@ class Mixup(torch.nn.Module):
 def get_model(model):
     if model == 'resnet18':
         model = resnet18()
+    if model == 'resnet50':
+        model = resnet50()
     elif model == 'vgg11':
         model = vgg11()
     elif model == 'mobilenet_v2':

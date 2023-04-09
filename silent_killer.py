@@ -42,8 +42,8 @@ def get_args():
                             help='if not none, the main results will be writen to this file')
 
     # poison crafting
-    arg_parser.add_argument('--n_samples', type=int, default=500, help='number of samples for poison')
-    arg_parser.add_argument('--crafting_repetitions', type=int, default=250, help='epochs for poison crafting')
+    arg_parser.add_argument('--n_samples', type=int, default=500, help='number of samples for poison') # Number of sample needs to lower
+    arg_parser.add_argument('--crafting_repetitions', type=int, default=10, help='epochs for poison crafting')
     arg_parser.add_argument('--alpha_poison', type=float, default=1 / 255,
                             help='step size of poison in gradient alignment')
     arg_parser.add_argument('--alpha_trigger', type=float, default=0 / 255,
@@ -73,7 +73,7 @@ def get_args():
     arg_parser.add_argument('--trigger_batch_size', type=int, default=8_192)
     arg_parser.add_argument('--patch_size', type=int, default=8, help='patch size if the trigger is a patch')
     arg_parser.add_argument('--trigger_opt_epochs', type=int, default=500,
-                            help='epochs num in pre-training trigger optimization, 500')
+                            help='epochs num in pre-training trigger optimization, 500') # opt_epochs need to set low for testing if the code is working
     arg_parser.add_argument('--trigger_opt_eps', type=float, default=16 / 255)
     arg_parser.add_argument('--trigger_opt_lr', type=float, default=10 / 255)
     arg_parser.add_argument('--trigger_opt_gamma', type=float, default=1, help='scheduler gamma')
@@ -95,8 +95,8 @@ def get_args():
 
     # evaluation
     arg_parser.add_argument('--craft_model', type=str, default='resnet18',
-                            choices=['resnet18', 'vgg11', 'mobilenet_v2'])
-    arg_parser.add_argument('--eval_model', type=str, default='resnet18', choices=['resnet18', 'vgg11', 'mobilenet_v2'])
+                            choices=['resnet18', 'vgg11', 'mobilenet_v2', 'resnet50'])
+    arg_parser.add_argument('--eval_model', type=str, default='resnet18', choices=['resnet18', 'vgg11', 'mobilenet_v2', 'resnet50'])
     arg_parser.add_argument('--val_repetitions', type=int, default=1, help='number of repetitions of evaluation')
 
     # defences

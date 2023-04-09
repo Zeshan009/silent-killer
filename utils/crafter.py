@@ -11,7 +11,7 @@ from torchvision.transforms import Compose, RandomHorizontalFlip, RandomCrop
 
 from utils import datasets as ds_utils
 from utils.poison_optimizer import optimize_poison, optimize_poison_additive
-from utils.utils import init_loss, init_optimizer, gradient_matching, resnet18, vgg11, mobilenet, DEBUG
+from utils.utils import init_loss, init_optimizer, gradient_matching, resnet18, resnet50, vgg11, mobilenet, DEBUG
 
 
 def get_trigger_function(trigger_type, **kwargs):
@@ -64,6 +64,8 @@ class PoisonCrafter:
         # training settings
         if model_initializer == 'resnet18':
             self.model_initializer = resnet18
+        if model_initializer == 'resnet50':
+            self.model_initializer = resnet50
         elif model_initializer == 'vgg11':
             self.model_initializer = vgg11
         elif model_initializer == 'mobilenet_v2':
@@ -103,7 +105,7 @@ class PoisonCrafter:
                                                                       milestones=self.victim_milestones)
         if model_path is not None:
             print('load model from file')
-            self.model.load_state_dict(torch.load(model_path))
+            self.model.load_state_dict(torch.load(model_path), strict=False)
         else:
             print('train initial model from scratch')
             self._train(self.clean_dataset)
